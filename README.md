@@ -23,7 +23,7 @@ chestnut框架是基于Nodejs的KOA2框架进行封装的web服务快速开发�
 
 [chestnut-router框架](https://github.com/nandy007/chestnut-router)：提供基于KOA2路由的封装，简化调用。
 
-[chestnut-app框架](https://github.com/nandy007/chestnut-app)：综合其他chestnut其他框架，提供快速搭建web服务框架。
+[chestnut-app框架](https://github.com/nandy007/chestnut-app)：综合其他chestnut框架，提供快速搭建web服务框架。
 
 
 # 框架结构
