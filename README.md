@@ -166,6 +166,8 @@ npm run app demo
 
 比如：前端项目demo的访问地址为：http://127.0.0.1:3100/demo/index.html
 
+资源访问路径取决于webpack.config.app中的配置，请详细看配置，了解构建后的目录结构
+
 
 ### 启动后端服务
 
