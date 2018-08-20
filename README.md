@@ -224,3 +224,16 @@ npm run start ${projectName}
 请将${projectName}替换为具体的项目目录名称，必须指定项目！！！
 
 打包后启动的生产环境前后端代码在同一项目下，一个项目启动一个端口，端口在config.prod.js中配置
+
+
+# 在require.js中使用
+
+require.js中使用agile框架主要是指将编写的*.aui文件可用于require.js中，以及一些前端路由机制在require.js中的使用。
+
+aui-loader框架既是webpack中aui的加载器，也是require.js中的加载器。
+
+所以，再require.js中配置aui的加载器为aui-loader/dist/aui.js即可。
+
+但是单独的加载器中是不包含aui-h5组件的，为了能够在加载器中默认加载aui-h5组件，我们在demo示例中增加app/demo/aui.js文件将aui-loader和aui-h5的部分组件打包成一个文件
+
+在public/demo/amd.html中调用，在public/demo/assets/js/main.js进行配置使用此文件
