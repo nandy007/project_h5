@@ -160,6 +160,12 @@ npm run app demo
 
 即启动demo项目，如果不指定，则所有app项目均启动。当项目超过3个时不建议同时启动。
 
+前端启动统一端口为3100，可自行在webpack.config.app.js中修改。
+
+启动后前端资源访问地址相对路径为：http://127.0.0.1:3100/${projectName}/
+
+比如：前端项目demo的访问地址为：http://127.0.0.1:3100/demo/index.html
+
 
 ### 启动后端服务
 
@@ -168,6 +174,12 @@ npm run server ${projectName}
 ```
 
 请将${projectName}替换为具体的项目目录名称，必须指定项目！！！
+
+后端服务的启动端口在各个项目的config.*.js文件中定义。
+
+启动后，后端接口访问相对路径为：http://127.0.0.1:${port}/${projectPath}，
+
+比如demo项目的login接口访问地址：http://127.0.0.1:7001/demo/access/login
 
 
 ## 打包
@@ -208,3 +220,5 @@ npm run pack
 npm run start ${projectName}
 ```
 请将${projectName}替换为具体的项目目录名称，必须指定项目！！！
+
+打包后启动的生产环境前后端代码在同一项目下，一个项目启动一个端口，端口在config.prod.js中配置
