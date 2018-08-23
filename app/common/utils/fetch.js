@@ -113,10 +113,14 @@ var util = {
     }
 };
 
-fetch.goTo = function(p, params){
+fetch.goTo = function(p, params, isForce){
     var query = util.getQueryStr(params);
-    if(query.length>0) p = p + '?' + query;
+    if(query.length>0) p = p + (p.indexOf('?')>-1?'&':'?') + query;
     location.href = p;
+    router.go({
+        path: p.replace('#', ''),
+        isForce: !!isForce
+    });
 };
 
 
@@ -194,9 +198,9 @@ fetch.getQueryObj = function(){
 
 fetch.reload = function(){
     var params = router.getQueryObj();
-    params.random = Math.random();
+    // params.random = Math.random();
     var p = location.hash.split('?')[0];
-    fetch.goTo(p, params);
+    fetch.goTo(p, params, true);
 };
 
 fetch.redirect = function(url, params){
