@@ -48,7 +48,7 @@
     "agile-ui": "^0.3.1",
     "aui-h5": "^0.1.16",
     "aui-loader": "^0.3.11",
-    "chestnut-app": "^0.2.7",
+    "chestnut-app": "^0.2.8",
     "chestnut-router": "^0.2.4",
     "chestnut-session": "^0.2.4",
     "chestnut-utils": "^0.2.6",

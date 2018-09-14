@@ -11,7 +11,7 @@
         <div class="demo-note">此处数据通过网络获取</div>
     </aui-header>
 
-    <aui-refresher style="position:absolute; top:110px; right: 0px; bottom: 0px; left: 0px; overflow: hidden;">
+    <aui-refresher style="position:absolute; top:110px; right: 0px; bottom: 0px; left: 0px;">
         <div>
             <aui-list>
                 <list-cell v-for="item in list">
