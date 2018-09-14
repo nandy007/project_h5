@@ -6,7 +6,7 @@ const rule4 = function (options) {
         const target = options.servers.shift();
         let opts = { target: target, headers: {}, secure: false };
         options.servers.push(target);
-
+        req.headers.host = 'www.baidu.com';
         res.setHeader("Access-Control-Allow-Origin", req.headers.origin||"*");
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods", "*");
@@ -21,6 +21,6 @@ module.exports = {
 	port: 80,
 	rule: rule4,
 	servers: [
-        'http://127.0.0.1:7001'
+        'https://www.baidu.com'
 	]
 };
