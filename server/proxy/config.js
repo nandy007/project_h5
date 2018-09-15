@@ -6,7 +6,7 @@ const rule4 = function (options) {
         const target = options.servers.shift();
         let opts = { target: target, headers: {}, secure: false };
         options.servers.push(target);
-        req.headers.host = 'www.baidu.com';
+        req.headers.host = target.split('://')[1];
         res.setHeader("Access-Control-Allow-Origin", req.headers.origin||"*");
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods", "*");
