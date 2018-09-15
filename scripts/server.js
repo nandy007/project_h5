@@ -17,8 +17,9 @@ try{
 function run(){
     console.log('当前运行服务：'+project);
     nodemon({
-        script: './server/'+project+'/app.js',
-        args: ['--inspect=0.0.0.0:5858'],
+        exec: `node --inspect=0.0.0.0:5858 ./server/${project}/app.js`,
+        // script: './server/'+project+'/app.js',
+        // args: ['--inspect=0.0.0.0:5858'],
         watch: './server/'+project,
         stdout: true
     });
