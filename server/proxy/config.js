@@ -10,10 +10,9 @@ const rule4 = function (options) {
         res.setHeader("Access-Control-Allow-Origin", req.headers.origin||"*");
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods", "*");
-
-		// 通过代理指向分配的服务器
+	    // 通过代理指向分配的服务器
 		proxy.web(req, res, opts);
-	}
+    }
 };
 
 
