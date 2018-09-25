@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === 'production') {
 	const publicSrcPath = path.join(__dirname, '../public');
 	
 	glob.sync('*', {cwd: publicSrcPath}).forEach((folder)=>{
-		fs.copySync(path.join(publicSrcPath, folder), path.join(versionPath, folder+'/static'));
+		if(apps.indexOf(folder)>-1) fs.copySync(path.join(publicSrcPath, folder), path.join(versionPath, folder+'/static'));
 	});
 	
 	outputRoot = versionPath;
