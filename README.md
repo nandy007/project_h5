@@ -243,6 +243,17 @@ aui-loader框架既是webpack中aui的加载器，也是require.js中的加载�
 
 ## 路由使用
 
+### 路由特性
+
+1. 路由可以有多级，每一级都对应一个aui-page组件，即每一级路由对应的组件会在aui-page中显示。
+
+2. 两个组件切换时，显示的组件会触发enter事件，同时赋予active样式，隐藏的组件会触发leave事件，同时移除active样式。
+
+3. 当路由没有设置cache: true缓存时，组件被切换隐藏是会被remove出aui-page，即销毁；反之会移除掉active样式，但不会被remove掉，在aui-page中仍然存在。
+
+4. 每一级aui-page下有且仅有一个路由组件显示，当组件显示时将会被赋予active样式，其他组件被移除active样式。
+
+
 ### 路由获取
 
 ```javascript
@@ -431,3 +442,103 @@ export default class Main{
 $('#main').trigger('main');
 
 ```
+
+## mvvm相关
+
+### v-model指令
+
+v-model指令是表单元素双向数据绑定指令，由于html的表单元素的value都是string类型，而我们从后台返回的数据可能是数字型（number）
+
+这时候就可能导致模型匹配的时候会出错，所以当双向绑定的数据类型是number类型时需要给对应的表单元素添加number属性，比如
+
+```html
+
+<select id="day_interval" v-model="formData.day_interval" number>
+    <option v-for="item in day_interval_list" v-bind:value="item" v-text="item"></option>
+</select>
+
+```
+
+### v-filter指令
+
+v-filter指令必须跟v-for指令一起使用，用于为循环体做数据预处理的指令，其值必须是一个函数，该函数默认接收两个参数：index（当前循环的索引值）， item（当前循环的数组元素对象），比如：
+
+```html
+
+<ul>
+    <li v-for="item in list" v-filter="func.doFilter" v-text="item.title"></li>
+</ul>
+
+```
+
+```javascript
+
+var obj = {
+    list: [
+        {
+            title: 'agile ce框架发布'
+        }
+    ],
+    func: {
+        doFilter: function(index, item){
+            item.title = '第'+index+'条数据'; // 最终注入的文本被替换，而不再是'agile ce框架发布'
+        }
+    }
+}
+
+```
+
+### vmignore属性
+
+当dom元素具有vmignore属性，则该元素不会被mvvm处理。
+
+主要用处有：
+
+1. 当对一个内部有众多dom元素，但是仅有几个元素使用mvvm注入时，其他不需要mvvm注入的元素可以设置此属性，可以提高指令遍历的速度，提高运行效率。
+
+2. 当某个aui组件任意父元素和内部各自有mvvm注入时，或者有嵌套元素各自有mvvm注入时，为了避免mvvm指令被父节点读取，可以在子元素中设置该属性。
+
+
+### useTemplate属性
+
+useTemplate属性配合v-for使用，用于对v-for内部子元素使用$.template进行模板预处理。
+
+$.template模板注入是不可逆数据注入，不支持数据绑定，仅做注入，所以性能和效率比mvvm高，如果v-for内部数据不需要动态改变，或者仅有少量数据需要动态改变，则可以使用此方法以提高性能。
+
+useTemplate属性可以不设置值，此时模板内容即为v-for内部的innerHTML内容；当设置值的时候，其值为$.template的模板id值，模板id值设置方式如下：
+
+```javascript
+
+$.template.setter(id, templateStr);
+
+```
+
+完整示例如下：
+
+```html
+
+<ul class="org-user" v-on:click="func.popupCard()">
+    <li v-for="user in formData.users" useTemplate="contact_orguser">
+
+    </li>
+</ul>
+
+```
+
+
+```javascript
+
+$.template.setter('contact_orguser', `
+        <div class="headIcon">
+            <%if(user.photourl){%>
+                <img src="<%=#user.photourl||''%>" alt="" class="head">
+            <%}else{%>
+                <div style="background: <%=#user.avatar_color||''%>" class="avatar_user"><%=user.avatar_text%></div>
+            <%}%>
+        </div>
+        <span><%=#user.name||''%></span>
+    `);  
+
+```
+
+其中template模板注入的数据跟mvvm注入的数据一致。
