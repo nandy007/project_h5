@@ -348,8 +348,11 @@ location.href = '#/main?username=nandy007'; // 跳转路由并传参
 
 ```javascript
 
-var params = router.getQueryObj();
-var username = params.username; // 获取路由跳转的参数
+var hashParams = router.getQueryObj(); // 获取当前hash值中键值对参数
+var username = hashParams.username; // 获取路由跳转的参数
+
+var searchParams = router.getQueryObj(location.search); // 获取url地址中的键值对参数，假设url为 http://domain.com/index.html?employeeId=8888#/main
+var employeeId = searchParams.employeeId; // 获取到url search部分的参数
 
 ```
 
