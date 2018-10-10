@@ -509,7 +509,7 @@ useTemplate属性可以不设置值，此时模板内容即为v-for内部的inne
 
 ```javascript
 
-$.template.setter(id, templateStr);
+$.template.setter(id, templateStr); // id值必须全局唯一
 
 ```
 
