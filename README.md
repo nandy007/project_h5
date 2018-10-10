@@ -353,6 +353,30 @@ var username = params.username; // 获取路由跳转的参数
 
 ```
 
+需要特别说明的是，getQueryObj方法默认会对参数进行解码，但是解码方式不一定适合所有情况，当发现获取参数乱码时，可以通过重写router内部编解码函数进行处理。比如：
+
+```javascript
+// 编码方式重写
+router._escape = function(v){
+    v = v||'';
+    try{
+        return encodeURIComponent(v);
+    }catch(e){
+        return v;
+    }
+}
+// 解码方式重写
+router._unescape = function(v){
+    v = v||'';
+    try{
+        return deocodeURIComponent(v);
+    }catch(e){
+        return v;
+    }
+}
+
+```
+
 ## 组件互调
 
 aui组件之间可能需要互相调用内部方法进行处理，比如A组件刷新B组件数据等。
