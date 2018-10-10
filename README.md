@@ -517,7 +517,7 @@ var obj = {
 
 ### vmignore属性
 
-当dom元素具有vmignore属性，则该元素不会被mvvm处理。
+当dom元素具有vmignore属性，则该元素及其内部元素不会被mvvm处理（mvvm指明遍历到vmignore就不会继续往下遍历）。所以，一般该属性设置在较外层元素上，这样包含的元素范围更广。
 
 主要用处有：
 
