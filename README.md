@@ -542,13 +542,13 @@ var obj = {
 2. 当某个aui组件任意父元素和内部各自有mvvm注入时，或者有嵌套元素各自有mvvm注入时，为了避免mvvm指令被父节点读取，可以在子元素中设置该属性。
 
 
-### useTemplate属性
+### v-template指令（等价于useTemplate属性）
 
-useTemplate属性配合v-for使用，用于对v-for内部子元素使用$.template进行模板预处理。
+v-template指令，用于对子元素使用$.template进行模板预处理，预处理的结果再使用mvvm注入（如果内部含有mvvm指令的话）。
 
 $.template模板注入是不可逆数据注入，不支持数据绑定，仅做注入，所以性能和效率比mvvm高，如果v-for内部数据不需要动态改变，或者仅有少量数据需要动态改变，则可以使用此方法以提高性能。
 
-useTemplate属性可以不设置值，此时模板内容即为v-for内部的innerHTML内容；当设置值的时候，其值为$.template的模板id值，模板id值设置方式如下：
+v-template属性可以不设置值，此时模板内容即为v-for内部的innerHTML内容；当设置值的时候，其值为$.template的模板id值，模板id值设置方式如下：
 
 ```javascript
 
@@ -561,7 +561,7 @@ $.template.setter(id, templateStr); // id值必须全局唯一
 ```html
 
 <ul class="org-user" v-on:click="func.popupCard()">
-    <li v-for="user in formData.users" useTemplate="contact_orguser">
+    <li v-for="user in formData.users" v-template="contact_orguser">
 
     </li>
 </ul>
