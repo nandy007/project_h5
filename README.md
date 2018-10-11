@@ -472,6 +472,22 @@ $('#main').trigger('main');
 
 ## mvvm相关
 
+### 手动销毁mvvm
+
+mvvm通过*$(selector).render(obj);*创建，它返回一个mvvm对象，如果不需要使用的时候请调用该对象的destroy方法手动进行销毁。
+
+比如：
+
+```javascript
+
+var vm = $(selector).render(obj); // 返回一个mvvm对象
+
+vm.destroy();
+
+```
+
+结合aui组件使用，一般在aui组件被移除（detached）的时候调用此方法，但是detached不代表组件已经销毁，可能会重新添加到文档dom中，所以应该根据需要未必是在detached中销毁mvvm。
+
 ### v-model指令
 
 v-model指令是表单元素双向数据绑定指令，由于html的表单元素的value都是string类型，而我们从后台返回的数据可能是数字型（number）
