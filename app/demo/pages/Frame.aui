@@ -69,7 +69,7 @@ export default class Frame{
     created(){
         // 通过hash值来判断首次加载的路由
         const hash = (location.hash||'/').replace('#', '');
-        router.go(hash);
+        router.go(hash, true);
     }
 }
 
