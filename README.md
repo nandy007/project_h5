@@ -372,7 +372,7 @@ router._escape = function(v){
 router._unescape = function(v){
     v = v||'';
     try{
-        return deocodeURIComponent(v);
+        return decodeURIComponent(v);
     }catch(e){
         return v;
     }
