@@ -11,13 +11,13 @@ const rule4 = function (options) {
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods", "*");
 	    // 通过代理指向分配的服务器
-		proxy.web(req, res, opts);
+	    proxy.web(req, res, opts);
     }
 };
 
 
 module.exports = {
-	port: 80,
+    port: 80,
 	rule: rule4,
 	servers: [
         'https://www.baidu.com'
