@@ -585,3 +585,106 @@ $.template.setter('contact_orguser', `
 ```
 
 其中template模板注入的数据跟mvvm注入的数据一致。
+
+
+### 已赋值但ui不变
+
+如果使用不当，会发生已经赋值但是ui显示没有变化的情况，这种情况通常是由于mvvm对象绑定混乱造成。
+
+由于mvvm绑定是严格的对象监测，如果对象性质已经改变则绑定失效。
+
+常见的原因有：
+
+1. 对象（我们一般称为变量）未定义
+
+即：ui中使用mvvm绑定的变量必须事先在注入的对象中定义。
+
+比如：
+
+```html
+
+<span v-text="a.b"></span>
+
+```
+
+那么，在注入的对象中至少要包含{a:{b:...}}
+
+```javascript
+
+var obj = {
+    a: {
+        b: 'test'
+    }
+};
+
+// var obj = {a:{}}; // 此为错误写法，因为ui中用到b，但是为定义b
+
+$('span').render(obj);
+
+```
+
+同样的，如果是数组，且初始化没有值，也应该定义为一个空数组 [] 或 new Array()，而不是null或者undefined，比如：
+
+```html
+
+<span v-for="item in list" v-text="item.title"></span>
+
+```
+
+```javascript
+
+var obj = {
+    list: []
+};
+
+// var obj = {a:{}}; // 此为错误写法，因为ui中用到b，但是为定义b
+
+$('span').render(obj);
+
+obj.list.push({
+    title: '1'
+});
+
+```
+
+2. 嵌套注入
+
+嵌套注入是指具有父子层级结构的dom都需要进行注入，这时候可以使用vmignore来避免，而不是让绑定交叉混用。
+
+具体用法请看 vmignore属性 用法
+
+
+3. 重复注入
+
+一个dom对象被多次注入是不允许的。
+
+
+4. 对象改变
+
+对应一旦定义则不可改变。
+
+比如：
+
+```javascript
+
+var obj = {
+    a: {
+        b: 1
+    },
+    list: []
+};
+
+obj.a = {
+    b: 2
+};
+
+obj.list = [{
+    title: 1
+}];
+
+
+```
+
+上面的例子中对象a的存储地址实际已经改变，重新被赋值，会导致mvvm失效。同理数组的重新赋值也是不行的。
+
+但是，在最新版agile-ce@0.4.23之后这种行为已经可以支持，源于ace框架内部做了处理，赋值采用深拷贝处理
