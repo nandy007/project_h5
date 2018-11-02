@@ -43,7 +43,7 @@
     "webpack-dev-server": "^2.8.2"
   },
   "dependencies": {
-    "agile-ce": "^0.4.26",
+    "agile-ce": "^0.4.27",
     "agile-ui": "^0.3.1",
     "aui-h5": "^0.1.27",
     "aui-loader": "^0.3.11",
