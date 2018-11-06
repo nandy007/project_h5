@@ -27,7 +27,7 @@ import '@auifont/iconfont.css';
                 当设置多个属性监听的时候都会进到此函数，可以根据attrName进行区分
     5. 类的实例化对象中this.$el代表的就是当前组件对应的标准dom对象（不是一个jquery的$对象），注意this本身不是一个dom对象
     6. ui标签可以不写，可以在created或者其他事件中往this.$el来innerHTML进行实例化
-    7. 当存在ui的时候，调用组件的时候组件存在子元素的时候，这时候子元素是无效的，比如frame组件的ui改为：
+    7. 当组件存在ui，且被调用时存在子元素，这时候子元素是无效的，比如frame组件的ui改为：
         <ui><div>test</div></ui>
        当调用<aui-frame><div>子组件</div></aui-frame>时，实际看到的是<aui-frame><div>test</div></aui-frame>
        如果需要显示子组件，可以使用<child></child>来占位替代，该标签在哪出现则显示在哪，比如frame的ui改为：

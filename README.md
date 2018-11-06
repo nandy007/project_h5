@@ -254,24 +254,25 @@ aui-loader框架既是webpack中aui的加载器，也是require.js中的加载�
 
 4. ui标签可以不写，可以在created或者其他事件中往this.$el来innerHTML进行实例化
 
-5. 当存在ui的时候，调用组件的时候组件存在子元素的时候，这时候子元素是无效的，比如frame组件的ui改为：
+5. 当组件存在ui，且被调用时存在子元素，这时候子元素是无效的，比如frame组件的ui改为：
 
 ```html
 <ui><div>test</div></ui>
 ```
         
    当调用
+
    ```html
    <aui-frame><div>子组件</div></aui-frame>
    ```
 
-   时，实际看到的是
+   实际看到的是
    
    ```html
    <aui-frame><div>test</div></aui-frame>
    ```
    
-   如果需要显示子组件，可以使用
+   如果需要显示子组件，可以在ui定义中使用
    
    ```html
    <child></child>
@@ -311,7 +312,7 @@ aui-loader框架既是webpack中aui的加载器，也是require.js中的加载�
 ```
 
         解析结果为
-        
+
 ```html
         <style>
         aui-frame div{
