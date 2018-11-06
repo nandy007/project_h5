@@ -241,15 +241,106 @@ aui-loader框架既是webpack中aui的加载器，也是require.js中的加载�
 
 # 开发技巧
 
+## aui组件相关
+
+
+### 组件定义
+
+1. 组件定义必须包含是一个具有结构化的函数/类
+
+2. 可以使用es6（使用export default导出class）或者es5（使用module.exports = Function.prototype）来定义
+
+3. 类中必须定义静态的属性tag为标签名，实际调用的标签即为aui-tag
+
+4. ui标签可以不写，可以在created或者其他事件中往this.$el来innerHTML进行实例化
+
+5. 当存在ui的时候，调用组件的时候组件存在子元素的时候，这时候子元素是无效的，比如frame组件的ui改为：
+
+```html
+<ui><div>test</div></ui>
+```
+        
+   当调用<code><aui-frame><div>子组件</div></aui-frame><code>时，实际看到的是<code><aui-frame><div>test</div></aui-frame></code>
+   
+   如果需要显示子组件，可以使用<code><child></child></code>来占位替代，该标签在哪出现则显示在哪，比如frame的ui改为：
+
+```html
+<ui><div>test<child></child></div></ui>
+```
+   这时候调用<code><aui-frame><div>子组件</div></aui-frame></code>时，实际看到的就是<code><aui-frame><div>test<div>子组件</div></div></aui-frame></code>
+
+
+6. style标签默认是标准css语法，当设置type="less"时可以编写less语法；当设置type="sass"时可以编写sass语法，建议使用less，比如：
+
+```html
+        <style type="less">
+        @width: 100px;
+
+        aui-frame{
+            div{
+                width: @width;
+            }
+        }
+
+        </style>
+        解析结果为
+        <style>
+        aui-frame div{
+            width: 100px;
+        }
+
+        </style>
+```
+
+### 组件生命周期
+
+组件类的四个生命周期事件：
+
+1. created（组件创建时触发）：比如：const $frame = $('<aui-frame></aui-frame>').appendTo($('body));
+    
+   这时候aui-frame组件被创建并添加到body元素中，触发created事件
+
+
+2. detached（组件移除文档时触发）：比如：const fragment = document.createDocumentFragment(); fragment.append($frame[0]); 
+   
+   这时候刚才的frame组件被从body中抽出，并添加到fragment，由于fragment元素也不在文档中，这时候就会触发detached事件
+
+3. adopted（组件从旧文档移到新文档时触发）：比如：const $div = $('div').appendTo($('body')); $div.append($frame); 
+    
+   这时候将一个div添加到body中，则div处于文档中，然后将frame添加到div中相当于从body中移动到div中，所以会触发adopted事件
+
+4. attributeChanged（组件属性改变时触发）：属性改变需要组件类定义静态属性observedAttributes = [需要监控的属性名]
+   比如：假设设置了
+   ```javascript
+    static get observedAttributes(){
+        return ['init'];
+    }
+   ```
+
+   当设置$frame.attr('init', 'true');则会触发attributeChanged事件，该事件接收三个参数（attrName, oldVal, newVal）
+
+   当设置多个属性监听的时候都会进到此函数，可以根据attrName进行区分
+
+
+### 组件类实例化对象关键属性
+
+1. 类的实例化对象中this.$el代表的就是当前组件对应的标准dom对象（不是一个jquery的$对象），注意this本身不是一个dom对象
+
+2. 而this.$el又具有component属性，其值即为this，也就是组件实例化对象本身。即：
+```javascript
+this.$el.component===this //true
+```
+    
+
 ## 路由使用
 
 ### 路由特性
 
 1. 路由可以有多级，每一级都对应一个aui-page组件，即每一级路由对应的组件会在aui-page中显示。
 
-2. 两个组件切换时，显示的组件会触发enter事件，同时赋予active样式，隐藏的组件会触发leave事件，同时移除active样式。
+2. 路由生命周期：两个组件切换时，显示的组件会触发enter事件（可监听该事件做逻辑），同时赋予active样式，隐藏的组件会触发leave事件（可监听该事件做逻辑），同时移除active样式。
 
-3. 当路由没有设置cache: true缓存时，组件被切换隐藏是会被remove出aui-page，即销毁；反之会移除掉active样式，但不会被remove掉，在aui-page中仍然存在。
+3. 当路由没有设置cache: true缓存时，组件被切换隐藏时会被remove出aui-page，即销毁（进入组件的detached事件）；反之会移除掉active样式，但不会被remove掉，在aui-page中仍然存在。
 
 4. 每一级aui-page下有且仅有一个路由组件显示，当组件显示时将会被赋予active样式，其他组件被移除active样式。
 
@@ -469,6 +560,7 @@ export default class Main{
 $('#main').trigger('main');
 
 ```
+
 
 ## mvvm相关
 
