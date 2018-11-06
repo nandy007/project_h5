@@ -329,7 +329,7 @@ aui-loader框架既是webpack中aui的加载器，也是require.js中的加载�
 1. created（组件创建时触发）：比如：
 
 ```javascript
-const $frame = $('<aui-frame></aui-frame>').appendTo($('body));
+const $frame = $('<aui-frame></aui-frame>').appendTo($('body'));
 ```
     
    这时候aui-frame组件被创建并添加到body元素中，触发created事件
