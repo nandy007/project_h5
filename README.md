@@ -326,17 +326,25 @@ aui-loader框架既是webpack中aui的加载器，也是require.js中的加载�
 
 组件类的四个生命周期事件：
 
-1. created（组件创建时触发）：比如：const $frame = $('<aui-frame></aui-frame>').appendTo($('body));
+1. created（组件创建时触发）：比如：
+
+```javascript
+const $frame = $('<aui-frame></aui-frame>').appendTo($('body));
+```
     
    这时候aui-frame组件被创建并添加到body元素中，触发created事件
 
 
-2. detached（组件移除文档时触发）：比如：const fragment = document.createDocumentFragment(); fragment.append($frame[0]); 
-   
+2. detached（组件移除文档时触发）：比如：
+```javascript
+const fragment = document.createDocumentFragment(); fragment.append($frame[0]); 
+```
    这时候刚才的frame组件被从body中抽出，并添加到fragment，由于fragment元素也不在文档中，这时候就会触发detached事件
 
-3. adopted（组件从旧文档移到新文档时触发）：比如：const $div = $('div').appendTo($('body')); $div.append($frame); 
-    
+3. adopted（组件从旧文档移到新文档时触发）：比如：
+```javascript
+const $div = $('div').appendTo($('body')); $div.append($frame); 
+```
    这时候将一个div添加到body中，则div处于文档中，然后将frame添加到div中相当于从body中移动到div中，所以会触发adopted事件
 
 4. attributeChanged（组件属性改变时触发）：属性改变需要组件类定义静态属性observedAttributes = [需要监控的属性名]
