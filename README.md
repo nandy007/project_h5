@@ -260,14 +260,39 @@ aui-loader框架既是webpack中aui的加载器，也是require.js中的加载�
 <ui><div>test</div></ui>
 ```
         
-   当调用<code><aui-frame><div>子组件</div></aui-frame><code>时，实际看到的是<code><aui-frame><div>test</div></aui-frame></code>
+   当调用
+   ```html
+   <aui-frame><div>子组件</div></aui-frame>
+   ```
+
+   时，实际看到的是
    
-   如果需要显示子组件，可以使用<code><child></child></code>来占位替代，该标签在哪出现则显示在哪，比如frame的ui改为：
+   ```html
+   <aui-frame><div>test</div></aui-frame>
+   ```
+   
+   如果需要显示子组件，可以使用
+   
+   ```html
+   <child></child>
+   ```
+   
+   来占位替代，该标签在哪出现则显示在哪，比如frame的ui改为：
 
 ```html
 <ui><div>test<child></child></div></ui>
 ```
-   这时候调用<code><aui-frame><div>子组件</div></aui-frame></code>时，实际看到的就是<code><aui-frame><div>test<div>子组件</div></div></aui-frame></code>
+   这时候调用
+   
+   ```html
+   <aui-frame><div>子组件</div></aui-frame>
+   ```
+
+   时，实际看到的就是
+   
+   ```html
+   <aui-frame><div>test<div>子组件</div></div></aui-frame>
+   ```
 
 
 6. style标签默认是标准css语法，当设置type="less"时可以编写less语法；当设置type="sass"时可以编写sass语法，建议使用less，比如：
@@ -283,7 +308,11 @@ aui-loader框架既是webpack中aui的加载器，也是require.js中的加载�
         }
 
         </style>
+```
+
         解析结果为
+        
+```html
         <style>
         aui-frame div{
             width: 100px;
