@@ -43,14 +43,14 @@
     "webpack-dev-server": "^2.8.2"
   },
   "dependencies": {
-    "agile-ce": "^0.4.36",
+    "agile-ce": "^0.4.39",
     "agile-ui": "^0.3.1",
     "aui-h5": "^0.1.27",
     "aui-loader": "^0.3.11",
     "chestnut-app": "^0.2.8",
     "chestnut-router": "^0.2.4",
     "chestnut-session": "^0.2.4",
-    "chestnut-utils": "^0.2.6",
+    "chestnut-utils": "^0.2.7",
     "log4js": "^3.0.5",
     "moment": "^2.22.2",
     "supervisor": "^0.12.0"
