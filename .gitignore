@@ -62,3 +62,7 @@ typings/
 
 /dist
 /uploads
+
+app/test
+server/test
+public/test
