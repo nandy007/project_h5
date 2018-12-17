@@ -50,7 +50,7 @@
     "chestnut-app": "^0.2.8",
     "chestnut-router": "^0.2.4",
     "chestnut-session": "^0.2.4",
-    "chestnut-utils": "^0.2.7",
+    "chestnut-utils": "^0.2.9",
     "log4js": "^3.0.5",
     "moment": "^2.22.2",
     "supervisor": "^0.12.0"
