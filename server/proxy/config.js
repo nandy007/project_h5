@@ -7,11 +7,23 @@ const rule4 = function (options) {
         let opts = { target: target, headers: {}, secure: false };
         options.servers.push(target);
         req.headers.host = target.split('://')[1];
-        res.setHeader("Access-Control-Allow-Origin", req.headers.origin||"*");
+        res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
         res.setHeader("Access-Control-Allow-Credentials", "true");
-        res.setHeader("Access-Control-Allow-Methods", "*");
+        res.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");
+        if(req.headers['access-control-request-headers']) {
+            res.setHeader("Access-Control-Allow-Headers", options.allowHeaders || req.headers['access-control-request-headers']);
+        }
+
 	    // 通过代理指向分配的服务器
-	    proxy.web(req, res, opts);
+	    if(req.method.toLowerCase()==='options') {
+            // 复杂请求响应
+            res.writeHead(204);
+            res.write('');
+            res.end('');
+        }else{
+            // 其他请求响应
+            proxy.web(req, res, opts);
+        }
     }
 };
 
@@ -20,6 +32,6 @@ module.exports = {
     port: 80,
 	rule: rule4,
 	servers: [
-        'https://www.baidu.com'
+        'http://172.16.70.240:8666'
 	]
 };
