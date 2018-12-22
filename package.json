@@ -44,8 +44,8 @@
   },
   "dependencies": {
     "agile-ce": "^0.4.39",
-    "agile-ui": "^0.3.5",
-    "aui-h5": "^0.1.27",
+    "agile-ui": "^0.3.6",
+    "aui-h5": "^0.1.32",
     "aui-loader": "^0.3.11",
     "chestnut-app": "^0.2.8",
     "chestnut-router": "^0.2.4",
