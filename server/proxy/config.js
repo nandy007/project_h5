@@ -27,6 +27,18 @@ const rule4 = function (options) {
     }
 };
 
+const rule1 = function (options) {
+	return function (req, res, proxy) {
+        req.headers.host = 'www.baidu.com';
+        const target = 'https://www.baidu.com';
+        let opts = { target: target, headers: {}, secure: false };
+       
+        // 其他请求响应
+        proxy.web(req, res, opts);
+        
+    }
+};
+
 
 module.exports = {
     port: 80,
