@@ -52,7 +52,10 @@
     "chestnut-session": "^0.2.4",
     "chestnut-utils": "^0.2.12",
     "log4js": "^3.0.5",
+    "mailparser": "^2.4.3",
     "moment": "^2.22.2",
+    "nodemailer": "^5.0.0",
+    "smtp-server": "^3.4.7",
     "supervisor": "^0.12.0"
   }
 }
