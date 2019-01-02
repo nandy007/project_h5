@@ -595,7 +595,7 @@ export default class Main{
 
 ```javascript
 
-$('#main').trigger('main');
+$('#main').trigger('doRefresh');
 
 ```
 
