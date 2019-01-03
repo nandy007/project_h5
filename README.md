@@ -26,6 +26,38 @@ chestnut框架是基于Nodejs的KOA2框架进行封装的web服务快速开发�
 [chestnut-app框架](https://github.com/nandy007/chestnut-app)：综合其他chestnut框架，提供快速搭建web服务框架。
 
 
+Tips：
+
+1. oracledb可通过源码方式编译安装https://oracle.github.io/node-oracledb/INSTALL.html#github
+
+第一步：克隆源码工程
+
+```bash
+cd your-dir-path
+git clone https://github.com/oracle/node-oracledb.git
+
+```
+
+
+第二步：添加submodule模块
+
+```bash
+
+cd node-oracledb
+git submodule init
+git submodule update
+
+```
+
+第三步：源码编译到指定项目
+
+```bash
+
+cd your-project-dir
+npm install your-dir-path/node-oracledb
+
+```
+
 # 框架结构
 
 整个框架采用webpack进行构建，同时也包含requirejs中的使用示例。
