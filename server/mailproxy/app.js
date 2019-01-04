@@ -7,7 +7,7 @@ new ReceiveReverseProxy({
         port: 11024
     },
     target: {
-        port: 995,
+        port: 993,
         host: 'partner.outlook.cn'
     }
 });
@@ -21,3 +21,24 @@ new SendReverseProxy({
         host: 'partner.outlook.cn'
     }
 });
+
+
+// new ReceiveReverseProxy({
+//     local: {
+//         port: 11026
+//     },
+//     target: {
+//         port: 995,
+//         host: 'pop.gmail.com'
+//     }
+// });
+
+// new SendReverseProxy({
+//     local: {
+//         port: 11027
+//     },
+//     target: {
+//         port: 465,
+//         host: 'smtp.gmail.com'
+//     }
+// });
