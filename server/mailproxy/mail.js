@@ -1,6 +1,5 @@
 const net = require('net');
 
-
 class ReceiveReverseProxy{
     constructor(options){
         this.local = options.local;
@@ -122,9 +121,17 @@ class SendReverseProxy{
         
             // Handle message stream
             onData(stream, session, callback) {
+
+                
+                let isValidate = true;
+                // 发送前做一些鉴权判断
+                // if(session.auth.username.indexOf('huangnan')>-1){
+                //     isValidate = false;
+                // }
                 
                 simpleParser(stream, (err, mail) => {
                     if(err) return console.error(err);
+
                     var transporter = nodemailer.createTransport({
                         port: TARGET_PORT,
                         host: TARGET_HOST,
@@ -138,27 +145,32 @@ class SendReverseProxy{
                     });
         
                     mail.to = mail.to.value; // 单独设置to，为什么？
-        
-                    transporter.sendMail(mail, (error, info) => {
-                        if (error) {
-                            console.log('Error occurred');
-                            console.log(error.message);
-                            return;
-                        }
-                        console.log('Message sent successfully!');
-                        console.log('Server responded with "%s"', info.response);
-                        transporter.close();
-                    });
+                    if(isValidate){
+                        transporter.sendMail(mail, (error, info) => {
+                            if (error) {
+                                console.log('Error occurred');
+                                console.log(error.message);
+                                return;
+                            }
+                            console.log('Message sent successfully!');
+                            console.log('Server responded with "%s"', info.response);
+                            transporter.close();
+                        });
+                    }
+                    
                 });
         
                 
                 stream.on('end', () => {
                     let err;
-                    if (stream.sizeExceeded) {
-                        err = new Error('Error: message exceeds fixed maximum message size 10 MB');
+                    if(!isValidate){
+                        err = new Error('Error: no permision');
                         err.responseCode = 552;
-                        return callback(err);
+                    }else if (stream.sizeExceeded) {
+                        err = new Error('Error: message exceeds fixed maximum message size 10 MB');
+                        err.responseCode = 552; 
                     }
+                    if(err) return callback(err);
                     callback(null, 'Message queued as abcdef'); // accept the message once the stream is ended
                 });
         
