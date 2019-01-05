@@ -2,13 +2,33 @@
 
 const {ReceiveReverseProxy, SendReverseProxy} = require('./mail');
 
+// new ReceiveReverseProxy({
+//     local: {
+//         port: 11024
+//     },
+//     target: {
+//         port: 993,
+//         host: 'partner.outlook.cn'
+//     }
+// });
+
+// new SendReverseProxy({
+//     local: {
+//         port: 11025
+//     },
+//     target: {
+//         port: 25,
+//         host: 'partner.outlook.cn'
+//     }
+// });
+
 new ReceiveReverseProxy({
     local: {
         port: 11024
     },
     target: {
         port: 993,
-        host: 'partner.outlook.cn'
+        host: 'imap.126.com'
     }
 });
 
@@ -17,10 +37,11 @@ new SendReverseProxy({
         port: 11025
     },
     target: {
-        port: 25,
-        host: 'partner.outlook.cn'
+        port: 465,
+        host: 'smtp.126.com'
     }
 });
+
 
 
 // new ReceiveReverseProxy({

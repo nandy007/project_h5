@@ -139,13 +139,13 @@ class SendReverseProxy{
                             user: session.auth.username,//发送者邮箱
                             pass: session.auth.password //邮箱第三方登录授权码
                         },
+                        secure: true, // 465端口需要设置为true，否则为false
                         debug: true
-                    },{
-                        from: session.address.address,//发送者邮箱
                     });
-        
+                    mail.from = session.auth.username;
                     mail.to = mail.to.value; // 单独设置to，为什么？
                     if(isValidate){
+                        // console.log(mail)
                         transporter.sendMail(mail, (error, info) => {
                             if (error) {
                                 console.log('Error occurred');
