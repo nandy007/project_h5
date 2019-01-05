@@ -139,7 +139,7 @@ class SendReverseProxy{
                             user: session.auth.username,//发送者邮箱
                             pass: session.auth.password //邮箱第三方登录授权码
                         },
-                        secure: true, // 465端口需要设置为true，否则为false
+                        secure: TARGET_PORT===465, // 465端口需要设置为true，否则为false
                         debug: true
                     });
                     mail.from = session.auth.username;
