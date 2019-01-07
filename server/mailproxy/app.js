@@ -22,13 +22,33 @@ const {ReceiveReverseProxy, SendReverseProxy} = require('./mail');
 //     }
 // });
 
+// new ReceiveReverseProxy({
+//     local: {
+//         port: 11024
+//     },
+//     target: {
+//         port: 993,
+//         host: 'imap.126.com'
+//     }
+// });
+
+// new SendReverseProxy({
+//     local: {
+//         port: 11025
+//     },
+//     target: {
+//         port: 465,
+//         host: 'smtp.126.com'
+//     }
+// });
+
 new ReceiveReverseProxy({
     local: {
         port: 11024
     },
     target: {
         port: 993,
-        host: 'imap.126.com'
+        host: 'imap.exmail.qq.com'
     }
 });
 
@@ -38,7 +58,7 @@ new SendReverseProxy({
     },
     target: {
         port: 465,
-        host: 'smtp.126.com'
+        host: 'smtp.exmail.qq.com'
     }
 });
 
