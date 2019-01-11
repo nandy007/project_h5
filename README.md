@@ -190,6 +190,12 @@ npm run app ${projectName}
 npm run app demo
 ```
 
+如果要启动指定多个项目，可用空格隔开，比如：
+
+```bash
+npm run app demo test
+```
+
 即启动demo项目，如果不指定，则所有app项目均启动。当项目超过3个时不建议同时启动。
 
 前端启动统一端口为3100，可自行在webpack.config.app.js中修改。
@@ -204,10 +210,12 @@ npm run app demo
 ### 启动后端服务
 
 ```bash
-npm run server ${projectName}
+npm run server ${projectName} ${port}
 ```
 
 请将${projectName}替换为具体的项目目录名称，必须指定项目！！！
+
+${port}为调试端口，可以不加，默认为5858，如果启动多个server，必须指定调试端口，否则会冲突！！！
 
 后端服务的启动端口在各个项目的config.*.js文件中定义。
 
