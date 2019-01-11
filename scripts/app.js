@@ -6,7 +6,7 @@ const { spawn } = require('child_process');
 let project = '';
 
 try{
-    project = JSON.parse(process.env.npm_config_argv).original.pop();
+    project = JSON.parse(process.env.npm_config_argv).original.slice(2).join(' ');
 }catch(e){
     console.log(e);
 }
