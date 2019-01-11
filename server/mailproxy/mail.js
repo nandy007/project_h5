@@ -140,7 +140,8 @@ class SendReverseProxy{
                             pass: session.auth.password //邮箱第三方登录授权码
                         },
                         secure: TARGET_PORT===465, // 465端口需要设置为true，否则为false
-                        debug: true
+                        debug: true,
+                        ignoreTLS: true
                     });
                     mail.from = session.auth.username;
                     mail.to = mail.to.value; // 单独设置to，为什么？
