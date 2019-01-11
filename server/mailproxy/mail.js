@@ -53,6 +53,12 @@ class ReceiveReverseProxy{
             clientSocket.on('error', function(err) {
                 console.error('== clientSocket has error : ' , err);
             });
+
+            if(TARGET_PORT!=='993'){
+                const welcome = `* OK [CAPABILITY IMAP4rev1 SASL-IR] Node ImapProxy wellcome you!\r\n`;
+                clientSocket.write(welcome);
+            }
+            
         });
 
 
