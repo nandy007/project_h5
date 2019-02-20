@@ -379,7 +379,7 @@ const $frame = $('<aui-frame></aui-frame>').appendTo($('body'));
 ```javascript
 const fragment = document.createDocumentFragment(); fragment.append($frame[0]); 
 ```
-   这时候刚才的frame组件被从body中抽出，并添加到fragment，由于fragment元素也不在文档中，这时候就会触发detached事件
+   这时候刚才的frame组件被从body中抽出，并添加到fragment，从body抽出时即移除文档（document），会触发detached事件
 
 3. adopted（组件从旧文档移到新文档时触发）：比如：
 ```javascript
@@ -860,3 +860,7 @@ obj.list = [{
 上面的例子中对象a的存储地址实际已经改变，重新被赋值，会导致mvvm失效。同理数组的重新赋值也是不行的。
 
 但是，在最新版agile-ce@0.4.23之后这种行为已经可以支持，源于ace框架内部做了处理，赋值采用深拷贝处理，而不是真实的赋值
+
+5. mvvm已经被销毁
+
+可以调用mvvm对象的destroy()方法销毁，这时候再进行数据改变不会在ui生效。
