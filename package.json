@@ -53,7 +53,10 @@
     "chestnut-utils": "^0.2.12",
     "log4js": "^3.0.5",
     "mailparser": "^2.4.3",
+    "marked": "^0.6.2",
     "moment": "^2.22.2",
+    "node-rsa": "^1.0.5",
+    "nodegit": "^0.24.1",
     "nodemailer": "^5.0.0",
     "smtp-server": "^3.4.7",
     "supervisor": "^0.12.0"
