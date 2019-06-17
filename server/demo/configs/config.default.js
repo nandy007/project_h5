@@ -36,7 +36,7 @@ const database = {
         events        :  true
     }
 };
-
+// console.log(path.join(__dirname, '../../../public'))
 module.exports = {
     projectPath: '/demo', // 项目访问路径，一旦配置，所有的路由访问前必须加上此项目路径
     port: 7001,                                      //启动端口
@@ -44,14 +44,14 @@ module.exports = {
     database: database, // 配合utils/db.js使用
     dbType: 'mssql',// 配合utils/db.js使用
     middleware: { // 中间件配置
-        staticPath: path.join(__dirname, '../../public'), // 配置静态目录
-        sessionConfig: {
-            key: 'SESSIONID', 
-            storeConfig: database.redis, // session存储配置;不配置则回话不能持久化
-            cookie: {
-                maxAge: 30 * 60 * 1000 //24 * 60 * 60 * 1000
-            }
-        },
+        staticPath: path.join(__dirname, '../../../public'), // 配置静态目录
+        // sessionConfig: {
+        //     key: 'SESSIONID', 
+        //     storeConfig: database.redis, // session存储配置;不配置则回话不能持久化
+        //     cookie: {
+        //         maxAge: 30 * 60 * 1000 //24 * 60 * 60 * 1000
+        //     }
+        // },
         multiParser: { dest: path.join(__dirname, '../../../uploads/') }     //文件上传临时目录
     },
     log: {

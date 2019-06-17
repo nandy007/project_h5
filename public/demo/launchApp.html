@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>启动页</title>
+    <script src="//g.alicdn.com/dingding/dingtalk-jsapi/2.0.57/dingtalk.open.js"></script>
+
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+    
+
+    <meta name="wpk-bid" content="dta_1_235425991">
+    <script>    !(function (c, i, e, b) {
+        var h = i.createElement("script");
+        var f = i.getElementsByTagName("script")[0];
+        h.type = "text/javascript";
+        h.crossorigin = true;
+        h.onload = function () {
+            c[b] || (c[b] = new c.wpkReporter({bid: "dta_1_235425991"}));
+            c[b].installAll()
+        };
+        f.parentNode.insertBefore(h, f);
+        h.src = e
+    })(window, document, "https://g.alicdn.com/woodpeckerx/jssdk??wpkReporter.js", "__wpk");</script>
+</head>
+<body>
+
+<p><a class="button button-big button-round" id="getLocation">开始定位</a></p>
+
+<p><a class="button button-big button-round" id="popupMessage">弹窗</a></p>
+
+<p><a class="button button-big button-round" id="getPhoneInfo">获取手机信息</a></p>
+
+<p><a class="button button-big button-round" id="getUUidInfo">获取UUID</a></p>
+
+<p><a class="button button-big button-round" id="callPhone">拨打电话</a></p>
+
+<p><a class="button button-big button-round" id="checkPhone">检查电话开通</a></p>
+
+<p><a class="button button-big button-round" id="openApp">打开APP</a></p>
+
+<p><a class="button button-big button-round" id="chooseSpaceDir">选取钉盘目录</a></p>
+
+<p><a class="button button-big button-round" id="saveFile">转存文件到钉盘</a></p>
+<script src="./config"></script>
+<script>
+
+    // var dingJsConfig = [[${dingJsConfig}]];
+    // console.log(dingJsConfig);
+    dd.config({
+        agentId: dingJsConfig.agentId, // 必填，微应用ID
+        corpId: dingJsConfig.corpId,//必填，企业ID
+        timeStamp: dingJsConfig.timeStamp, // 必填，生成签名的时间戳
+        nonceStr: dingJsConfig.nonceStr, // 必填，生成签名的随机串
+        signature: dingJsConfig.signature, // 必填，签名
+        type: 0,   //选填。0表示微应用的jsapi,1表示服务窗的jsapi；不填默认为0。该参数从dingtalk.js的0.8.3版本开始支持
+        jsApiList: [
+            'device.base.getPhoneInfo',
+            'device.geolocation.get',
+            'biz.map.locate',
+            'device.notification',
+            'biz.telephone.call',
+            'device.base.getPhoneInfo',
+            'runtime.permission.requestAuthCode',
+            'device.base.getPhoneInfo',
+            'device.launcher.launchApp',
+            'device.base.getUUID',
+            'biz.navigation.setMenu',
+            'biz.telephone.checkBizCall',
+            'biz.cspace.saveFile',
+            'biz.cspace.preview',
+            'biz.cspace.chooseSpaceDir'
+        ] // 必填，需要使用的jsapi列表，注意：不要带dd。
+    });
+
+    dd.ready(function () {
+
+        dd.biz.navigation.setMenu({
+            backgroundColor: "#ADD8E6",
+            textColor: "#ADD8E611",
+            items: [
+                {
+                    "id": "2",
+                    "iconId": "edit",
+                    "text": "编辑"
+                },
+                {
+                    "id": "3",
+                    "iconId": "photo",
+                    "text": "相册"
+                },
+                {
+                    "id": "4",
+                    "iconId": "setting",
+                    "text": "设置"
+                },
+                {
+                    "id": "5",
+                    "iconId": "time",
+                    "text": "时间"
+                }
+            ],
+            onSuccess: function (data) {
+                alert("按钮id:" + data.id)
+            },
+            onFail: function (err) {
+            }
+        });
+
+
+        $('#popupMessage').on('click', function () {
+            dd.device.notification.alert({
+                message: "测试",
+                title: "提示",//可传空
+                buttonName: "收到",
+                onSuccess: function () {
+                    //onSuccess将在点击button之后回调
+                    /*回调*/
+                    //getLocation();
+                },
+                onFail: function (err) {
+                }
+            });
+        });
+
+
+        $('#checkPhone').on('click', function () {
+            dd.biz.telephone.checkBizCall({
+                corpId: dingJsConfig.corpId, //企业id
+                onSuccess: function (result) {
+                    alert("result is " + result.isSupport);
+                },
+                onFail: function (err) {
+                    alert('dd callPhone error: ' + JSON.stringify(err));
+                }
+            })
+        });
+
+
+        $('#callPhone').on('click', function () {
+            dd.biz.telephone.call({
+                users: ['001', '002', '003'], //用户列表，工号
+                corpId: dingJsConfig.corpId, //企业id
+                onSuccess: function () {
+                },
+                onFail: function (err) {
+                    alert('dd callPhone error: ' + err);
+                }
+            })
+        });
+
+
+        $('#getPhoneInfo').on('click', function () {
+            dd.device.base.getPhoneInfo({
+                onSuccess: function (data) {
+                    alert('phone brand:' + data.brand + ",model:" + data.model + ",version:" + data.version + ",operatorType:" + data.operatorType);
+                },
+                onFail: function (err) {
+                    alert('dd getPhoneInfo error: ' + JSON.stringify(err));
+                }
+            });
+        });
+
+        $('#getUUidInfo').on('click', function () {
+            dd.device.base.getUUID({
+                onSuccess: function (data) {
+                    alert('uuid:' + data.uuid);
+                },
+                onFail: function (err) {
+                    alert('dd getUUidInfo error: ' + JSON.stringify(err));
+                }
+            });
+        });
+
+        $('#getLocation').on('click', function () {
+            dd.device.geolocation.get({
+                targetAccuracy: 200,
+                coordinate: 1,
+                withReGeocode: false,
+                useCache: false, //默认是true，如果需要频繁获取地理位置，请设置false
+                onSuccess: function (locationData) {
+                    dd.biz.map.locate({
+                        latitude: locationData.latitude, // 纬度，非必须
+                        longitude: locationData.longitude, // 经度，非必须
+                        onSuccess: function (result) {
+                            console.log(result);
+                        },
+                        onFail: function (err) {
+                            alert('dd locate error: ' + JSON.stringify(err));
+                        }
+                    });
+                },
+                onFail: function (err) {
+                    alert('dd geolocation error: ' + JSON.stringify(err));
+                }
+            });
+        });
+
+
+        $('#openApp').on('click', function () {
+            dd.device.launcher.launchApp({
+                app: 'com.uusafe.portal', //iOS:应用scheme;Android:应用包名
+                onSuccess: function (data) {
+                    alert(data.result);
+                },
+                onFail: function (err) {
+                    alert('dd launchApp error: ' + JSON.stringify(err));
+                }
+            });
+        });
+
+        $('#chooseSpaceDir').on('click', function () {
+            dd.biz.cspace.chooseSpaceDir({
+                corpId: dingJsConfig.corpId, //企业id,
+                onSuccess: function (data) {
+                    /* data结构
+                    {"data":
+                       [
+                       {
+                       "spaceId": "" //被选中的空间id
+                       "path": "", // 被选中的文件夹路径
+                       "dirId": "", //被选中的文件夹id
+                       }
+                       ]
+                    }
+                    */
+                    alert(JSON.stringify(data));
+                },
+                onFail: function (err) {
+                    alert(JSON.stringify(err));
+                }
+            });
+        });
+
+        $('#saveFile').on('click', function () {
+            dd.biz.cspace.saveFile({
+                corpId: dingJsConfig.corpId, //企业id,
+                url: "http://pic29.nipic.com/20130601/12122227_123051482000_2.jpg",  // 文件在第三方服务器地址， 也可为通过服务端接口上传文件得到的media_id，详见参数说明
+                name: "测试钉盘文件.jpg",
+                onSuccess: function (data) {
+                    /* data结构
+                    {"data":
+                       [
+                       {
+                       "spaceId": "" //空间id
+                       "fileId": "", //文件id
+                       "fileName": "", //文件名
+                       "fileSize": 111111, //文件大小
+                       "fileType": "", //文件类型
+                       }
+                       ]
+                    }
+                    */
+                    alert(JSON.stringify(data));
+                },
+                onFail: function (err) {
+                    alert(JSON.stringify(err));
+                }
+            });
+        });
+
+    });
+
+
+    dd.error(function (error) {
+        alert(JSON.stringify(error));
+    });
+
+
+</script>
+</body>
+</html>
