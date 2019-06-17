@@ -7,6 +7,7 @@ const appKey = 'dinglsttbc57rdj4dimy', appSecret = 'm5wCQfGJkDEPVsEHkUxqgdwEANwz
 agentId = '270181607', corpId = 'ding59876f8d16e27a9235c2f4657eb6378f';
 
 function sign(ticket, url){
+    // if(!ticket) return {};
     const nonceStr = oauth.createNonceStr(), timeStamp = oauth.createTimeStamp();
     const plain = oauth.raw({
         jsapi_ticket: ticket,
@@ -27,20 +28,45 @@ function sign(ticket, url){
     };
 };
 
+let _token;
+async function getToken(){
+    if(_token && oauth.isExpi(_token.ts)){
+        return _token
+    }
+    const ts = oauth.createTimeStamp();
+    const accessTokenRs = await fetch(`https://oapi.dingtalk.com/gettoken?appkey=${appKey}&appsecret=${appSecret}`, {});
+    const accessTokenInfo = oauth.getBody(accessTokenRs);
+    if(accessTokenInfo.access_token){
+        accessTokenInfo.ts = ts;
+        _token = accessTokenInfo;
+    }
+    return _token;
+}
+let _ticket;
+async function getTicket(access_token){
+    if(!access_token) return null;
+    if(_ticket && oauth.isExpi(_ticket.ts)){
+        return _ticket;
+    }
+    const ticketRs = await fetch(`https://oapi.dingtalk.com/get_jsapi_ticket?access_token=${access_token}`, {});
+    const ticketInfo = oauth.getBody(ticketRs);
+    if(ticketInfo.ticket){
+        ticketInfo.ts = oauth.createTimeStamp();
+        _ticket = ticketInfo;
+    }
+    return _ticket;
+}
+
 module.exports = {
     async getConfig(ctx){
 
-        const accessTokenRs = await fetch(`https://oapi.dingtalk.com/gettoken?appkey=${appKey}&appsecret=${appSecret}`, {});
+        const accessTokenInfo = await getToken();
 
-        const accessTokenInfo = oauth.getBody(accessTokenRs);
-// console.log(accessTokenInfo)
-        const ticketRs = await fetch(`https://oapi.dingtalk.com/get_jsapi_ticket?access_token=${accessTokenInfo.access_token}`, {});
+        const ticketInfo = await getTicket(accessTokenInfo && accessTokenInfo.access_token);
 
-        const ticketInfo = oauth.getBody(ticketRs);
-        console.log(ticketInfo)
         const url = ctx.headers['referer'];
 
-        const config = sign(ticketInfo.ticket, url);
+        const config = sign(ticketInfo && ticketInfo.ticket, url);
 
         ctx.body = `
             var dingJsConfig = ${JSON.stringify(config)};
