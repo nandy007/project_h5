@@ -10,7 +10,7 @@ function sign(ticket, url){
     const nonceStr = oauth.createNonceStr(), timeStamp = oauth.createTimeStamp();
     const plain = oauth.raw({
         jsapi_ticket: ticket,
-        noncestr: noncestr,
+        noncestr: nonceStr,
         timestamp: timeStamp,
         url: url
     });
