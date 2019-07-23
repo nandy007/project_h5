@@ -205,7 +205,7 @@
 
         $('#openApp').on('click', function () {
             dd.device.launcher.launchApp({
-                app: 'com.uusafe.portal', //iOS:应用scheme;Android:应用包名
+                app: 'your.package.name', //iOS:应用scheme;Android:应用包名
                 onSuccess: function (data) {
                     alert(data.result);
                 },
@@ -241,8 +241,8 @@
         $('#saveFile').on('click', function () {
             dd.biz.cspace.saveFile({
                 corpId: dingJsConfig.corpId, //企业id,
-                url: "http://pic29.nipic.com/20130601/12122227_123051482000_2.jpg",  // 文件在第三方服务器地址， 也可为通过服务端接口上传文件得到的media_id，详见参数说明
-                name: "测试钉盘文件.jpg",
+                url: "https://www.baidu.com/img/baidu_jgylogo3.gif",  // 文件在第三方服务器地址， 也可为通过服务端接口上传文件得到的media_id，详见参数说明
+                name: "测试钉盘文件.gif",
                 onSuccess: function (data) {
                     /* data结构
                     {"data":
